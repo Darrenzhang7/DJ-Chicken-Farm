@@ -93,7 +93,7 @@
   </div>
 <h2>超生有鸡队 🐔 产蛋统计</h2>
 <div id="eggControls" style="display: flex; gap: 20px; flex-wrap: wrap;"></div>
-<canvas id="eggChart" width="400" height="200"></canvas>
+<canvas id="eggChart" width="200" height="200"></canvas>
 
 <!-- Chart.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -115,7 +115,6 @@
         label: '鸡蛋数量 🥚',
         data: chickens.map(c => c.eggs),
         backgroundColor: ['#444', '#666', '#ffcc00', '#ffdd33']
-        barThickness: 77
       }]
     },
     options: {
