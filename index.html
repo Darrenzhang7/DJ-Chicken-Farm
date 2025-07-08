@@ -120,8 +120,6 @@
         label: '鸡蛋数量 🥚',
         data: chickens.map(c => c.eggs),
         backgroundColor: ['#444', '#666', '#ffcc00', '#ffdd33']
-        barThickness: 15,
-        maxBarThickness: 20
       }]
     },
     options: {
@@ -164,7 +162,29 @@
       </div>
     `).join('');
   }
+function updateUI() {
+  eggChart.data.datasets[0].data = chickens.map(c => c.eggs);
+  eggChart.update();
 
+  // 找最大蛋数
+  const maxEggs = Math.max(...chickens.map(c => c.eggs));
+
+  const container = document.getElementById('eggControls');
+  container.innerHTML = chickens.map(c => {
+    const crown = (c.eggs === maxEggs && maxEggs > 0) ? ' 👑' : '';
+    return `
+      <div style="text-align:center; cursor:pointer; margin:10px;">
+        <div style="font-size: 48px;" onclick="layEgg('${c.id}', 1)">
+          ${c.emoji}${crown}
+        </div>
+        <div>${c.color}鸡 ${c.id}</div>
+        <div onclick="layEgg('${c.id}', -1)" style="color:#333; text-decoration:underline; cursor:pointer;">
+          <strong>${c.eggs}</strong> 个蛋（点我减🥚）
+        </div>
+      </div>
+    `;
+  }).join('');
+}
   updateUI();
   window.layEgg = layEgg;
 </script>
