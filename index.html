@@ -91,6 +91,67 @@
         async>
     </script>
   </div>
+<h2>超生有鸡队 🐔 产蛋统计</h2>
+<div id="eggControls" style="display: flex; gap: 20px; flex-wrap: wrap;"></div>
+<canvas id="eggChart" width="400" height="200"></canvas>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const chickens = [
+    { id: 'B1', color: '黑', emoji: '🐓', eggs: 0 },
+    { id: 'B2', color: '黑', emoji: '🐓', eggs: 0 },
+    { id: 'Y1', color: '黄', emoji: '🐥', eggs: 0 },
+    { id: 'Y2', color: '黄', emoji: '🐥', eggs: 0 }
+  ];
+
+  const ctx = document.getElementById('eggChart').getContext('2d');
+  const eggChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: chickens.map(c => `${c.color}鸡 ${c.id}`),
+      datasets: [{
+        label: '鸡蛋数量 🥚',
+        data: chickens.map(c => c.eggs),
+        backgroundColor: ['#444', '#666', '#ffcc00', '#ffdd33']
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true, ticks: { stepSize: 1 } }
+      }
+    }
+  });
+
+  function layEgg(chickenId) {
+    const chicken = chickens.find(c => c.id === chickenId);
+    if (chicken) {
+      chicken.eggs++;
+      updateUI();
+    }
+  }
+
+  function updateUI() {
+    // 更新图表数据
+    eggChart.data.datasets[0].data = chickens.map(c => c.eggs);
+    eggChart.update();
+
+    // 更新“点击鸡头像”界面
+    const container = document.getElementById('eggControls');
+    container.innerHTML = chickens.map(c => `
+      <div style="text-align:center; cursor:pointer;" onclick="layEgg('${c.id}')">
+        <div style="font-size: 48px;">${c.emoji}</div>
+        <div>${c.color}鸡 ${c.id}</div>
+        <div><strong>${c.eggs}</strong> 个蛋</div>
+      </div>
+    `).join('');
+  }
+
+  updateUI();
+  window.layEgg = layEgg;
+</script>
 
   <footer>
     © 2025 DJ养鸡场 · 鸡圈生活真精彩！
