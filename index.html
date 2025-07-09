@@ -151,16 +151,6 @@
     // 更新图表数据
     eggChart.data.datasets[0].data = chickens.map(c => c.eggs);
     eggChart.update();
-
-    // 更新“点击鸡头像”界面
-    const container = document.getElementById('eggControls');
-    container.innerHTML = chickens.map(c => `
-      <div style="text-align:center; cursor:pointer;" onclick="layEgg('${c.id}',1)">
-        <div style="font-size: 48px;">${c.emoji}</div>
-        <div>${c.color}鸡 ${c.id}</div>
-        <div><strong>${c.eggs}</strong> 个蛋</div>
-      </div>
-    `).join('');
   }
 function updateUI() {
   eggChart.data.datasets[0].data = chickens.map(c => c.eggs);
