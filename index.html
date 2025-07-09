@@ -155,7 +155,7 @@
     // 更新“点击鸡头像”界面
     const container = document.getElementById('eggControls');
     container.innerHTML = chickens.map(c => `
-      <div style="text-align:center; cursor:pointer;" onclick="layEgg('${c.id}')">
+      <div style="text-align:center; cursor:pointer;" onclick="layEgg('${c.id}',1)">
         <div style="font-size: 48px;">${c.emoji}</div>
         <div>${c.color}鸡 ${c.id}</div>
         <div><strong>${c.eggs}</strong> 个蛋</div>
@@ -178,7 +178,7 @@ function updateUI() {
           ${c.emoji}${crown}
         </div>
         <div>${c.color}鸡 ${c.id}</div>
-        <div onclick="layEgg('${c.id}', 1)" style="color:#333; text-decoration:underline; cursor:pointer;">
+        <div onclick="layEgg('${c.id}', -1)" style="color:#333; text-decoration:underline; cursor:pointer;">
           <strong>${c.eggs}</strong> 个蛋（点我减🥚）
         </div>
       </div>
