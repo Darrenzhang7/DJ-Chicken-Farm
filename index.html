@@ -154,23 +154,28 @@
     }
 
     function updateUI() {
-      eggChart.data.datasets[0].data = chickens.map(c => c.eggs);
-      eggChart.update();
+  // 更新图表
+  eggChart.data.datasets[0].data = chickens.map(c => c.eggs);
+  eggChart.update();
 
-      const maxEggs = Math.max(...chickens.map(c => c.eggs));
+  // 保存到 localStorage ✅
+  localStorage.setItem('chickenEggData', JSON.stringify(chickens.map(c => c.eggs)));
 
-      const container = document.getElementById('eggControls');
-      container.innerHTML = chickens.map(c => {
-        const crown = (c.eggs === maxEggs && maxEggs > 0) ? ' 👑' : '';
-        return `
-          <div>
-            <div class="emoji" onclick="layEgg('${c.id}', 1)" title="点我加1个蛋">${c.emoji}${crown}</div>
-            <div>${c.color}鸡 ${c.id}</div>
-            <div class="eggs" onclick="layEgg('${c.id}', -1)" title="点我减1个蛋">${c.eggs} 个蛋</div>
-          </div>
-        `;
-      }).join('');
-    }
+  // 找最大蛋数
+  const maxEggs = Math.max(...chickens.map(c => c.eggs));
+
+  const container = document.getElementById('eggControls');
+  container.innerHTML = chickens.map(c => {
+    const crown = (c.eggs === maxEggs && maxEggs > 0) ? ' 👑' : '';
+    return `
+      <div>
+        <div class="emoji" onclick="layEgg('${c.id}', 1)" title="点我加1个蛋">${c.emoji}${crown}</div>
+        <div>${c.color}鸡 ${c.id}</div>
+        <div class="eggs" onclick="layEgg('${c.id}', -1)" title="点我减1个蛋">${c.eggs} 个蛋</div>
+      </div>
+    `;
+  }).join('');
+}
 
     updateUI();
     window.layEgg = layEgg;
