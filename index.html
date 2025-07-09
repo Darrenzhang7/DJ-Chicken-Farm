@@ -111,73 +111,70 @@
     { id: 'Y2', color: '黄', emoji: '🐥', eggs: 0 }
   ];
 
-  const ctx = document.getElementById('eggChart').getContext('2d');
-  const eggChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: chickens.map(c => `${c.color}鸡 ${c.id}`),
-      datasets: [{
-        label: '鸡蛋数量 🥚',
-        data: chickens.map(c => c.eggs),
-        backgroundColor: ['#444', '#666', '#ffcc00', '#ffdd33']
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-      legend: {
-        labels: {
-          font: {
-            size: 27  // 
+ const ctx = document.getElementById('eggChart').getContext('2d');
+    const eggChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: chickens.map(c => `${c.color}鸡 ${c.id}`),
+        datasets: [{
+          label: '鸡蛋数量 🥚',
+          data: chickens.map(c => c.eggs),
+          backgroundColor: ['#444', '#666', '#ffcc00', '#ffdd33'],
+          barThickness: 20,
+          maxBarThickness: 25
+        }]
+      },
+      options: {
+        responsive: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 30, // 设置最大Y轴刻度，避免柱子太高
+            ticks: { stepSize: 1 }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              font: {
+                size: 20
+              }
+            }
           }
         }
       }
-    },
-      scales: {
-        y: { beginAtZero: true, max: 17, ticks: { stepSize: 1 } }
+    });
+
+    function layEgg(chickenId, amount = 1) {
+      const chicken = chickens.find(c => c.id === chickenId);
+      if (chicken) {
+        chicken.eggs = Math.max(0, chicken.eggs + amount);
+        updateUI();
       }
     }
-  });
 
-  function layEgg(chickenId) {
-    const chicken = chickens.find(c => c.id === chickenId);
-    if (chicken) {
-      chicken.eggs++;
-      updateUI();
+    function updateUI() {
+      eggChart.data.datasets[0].data = chickens.map(c => c.eggs);
+      eggChart.update();
+
+      const maxEggs = Math.max(...chickens.map(c => c.eggs));
+
+      const container = document.getElementById('eggControls');
+      container.innerHTML = chickens.map(c => {
+        const crown = (c.eggs === maxEggs && maxEggs > 0) ? ' 👑' : '';
+        return `
+          <div>
+            <div class="emoji" onclick="layEgg('${c.id}', 1)" title="点我加1个蛋">${c.emoji}${crown}</div>
+            <div>${c.color}鸡 ${c.id}</div>
+            <div class="eggs" onclick="layEgg('${c.id}', -1)" title="点我减1个蛋">${c.eggs} 个蛋</div>
+          </div>
+        `;
+      }).join('');
     }
-  }
 
-  function updateUI() {
-    // 更新图表数据
-    eggChart.data.datasets[0].data = chickens.map(c => c.eggs);
-    eggChart.update();
-  }
-function updateUI() {
-  eggChart.data.datasets[0].data = chickens.map(c => c.eggs);
-  eggChart.update();
-
-  // 找最大蛋数
-  const maxEggs = Math.max(...chickens.map(c => c.eggs));
-
-  const container = document.getElementById('eggControls');
-  container.innerHTML = chickens.map(c => {
-    const crown = (c.eggs === maxEggs && maxEggs > 0) ? ' 👑' : '';
-    return `
-      <div style="text-align:center; cursor:pointer; margin:10px;">
-        <div style="font-size: 48px;" onclick="layEgg('${c.id}', 1)">
-          ${c.emoji}${crown}
-        </div>
-        <div>${c.color}鸡 ${c.id}</div>
-        <div onclick="layEgg('${c.id}', -1)" style="color:#333; text-decoration:underline; cursor:pointer;">
-          <strong>${c.eggs}</strong> 个蛋（点我减🥚）
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-  updateUI();
-  window.layEgg = layEgg;
-</script>
+    updateUI();
+    window.layEgg = layEgg;
+  </script>
 
   <footer>
     © 2025 DJ养鸡场 · 鸡圈生活真精彩！
