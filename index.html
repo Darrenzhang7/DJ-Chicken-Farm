@@ -125,7 +125,7 @@
   const chickens = [
     { id: 'B1', color: '黑', emoji: '🐓', eggs: 0 },
     { id: 'B2', color: '黑', emoji: '🐓', eggs: 0 },
-    { id: 'Rihanna', emoji: '🐓', eggs: 0 },
+    { id: 'Rihanna', color:  emoji: '🐓', eggs: 0 },
     { id: '鹰仔', color: '黑', emoji: '🐓', eggs: 0 },
     { id: 'Y1', color: '黄', emoji: '🐥', eggs: 0 },
     { id: 'Y2', color: '黄', emoji: '🐥', eggs: 0 }
@@ -141,11 +141,11 @@ if (savedEggs && Array.isArray(savedEggs) && savedEggs.length === chickens.lengt
     const eggChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: chickens.map(c => `${c.color}鸡 ${c.id}`),
+        labels: chickens.map(c => `${c.color} ${c.id}`),
         datasets: [{
           label: '鸡蛋数量 🥚',
           data: chickens.map(c => c.eggs),
-          backgroundColor: ['#444', '#666', '#ffcc00', '#ffdd33'],
+          backgroundColor: ['#444', '#666', '#444', '#666', '#ffcc00', '#ffdd33'],
           barThickness: 20,
           maxBarThickness: 25
         }]
