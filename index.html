@@ -125,7 +125,7 @@
   const chickens = [
     { id: 'B1', color: '黑', emoji: '🐓', eggs: 0 },
     { id: 'B2', color: '黑', emoji: '🐓', eggs: 0 },
-    { id: 'Rihanna',  emoji: '🐓', eggs: 0 },
+    { id: 'Rihanna', color: '黑', emoji: '🐓', eggs: 0 },
     { id: '鹰仔', color: '黑', emoji: '🐓', eggs: 0 },
     { id: 'Y1', color: '黄', emoji: '🐥', eggs: 0 },
     { id: 'Y2', color: '黄', emoji: '🐥', eggs: 0 }
@@ -194,7 +194,7 @@ if (savedEggs && Array.isArray(savedEggs) && savedEggs.length === chickens.lengt
     return `
       <div>
         <div class="emoji" onclick="layEgg('${c.id}', 1)">${c.emoji}${crown}</div>
-        <div>${c.color}鸡 ${c.id}</div>
+        <div>${c.id}</div>
         <div class="eggs" onclick="layEgg('${c.id}', -1)">${c.eggs} 个蛋</div>
       </div>
     `;
