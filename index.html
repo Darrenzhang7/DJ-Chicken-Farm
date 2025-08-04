@@ -141,7 +141,7 @@ if (savedEggs && Array.isArray(savedEggs) && savedEggs.length === chickens.lengt
     const eggChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: chickens.map(c => `${c.color} ${c.id}`),
+        labels: chickens.map(c => c.id.toString()),
         datasets: [{
           label: '鸡蛋数量 🥚',
           data: chickens.map(c => c.eggs),
@@ -206,7 +206,7 @@ if (savedEggs && Array.isArray(savedEggs) && savedEggs.length === chickens.lengt
   </script>
 
   <footer>
-    © 2025 DJ养鸡场 · 鸡圈生活真精彩！
+    © 2025 DJ养鸡场 · 有鸡的生活真精彩！
   </footer>
 </body>
 </html>
